@@ -179,7 +179,7 @@ class Data:
 
     WAKTU_MATKULS = utils.getWaktuMatkuls([100, 150, 200, 250, 300])
     PRODIS = utils.getProdis()
-    MATKULS = utils.getMatkuls("E:\IRC\MakeJadwal\data.xlsx")
+    MATKULS = utils.getMatkuls("E:\IRC\JadwalKuliah\d4ti ploting rapih.xlsx")
 
     def __init__(self):
         self._ruangans = []
@@ -306,7 +306,7 @@ class Prodi:
 
 
 class Matkul:
-    def __init__(self, kode, prodi, kodeMatkul, namaMatkul, menit, kelas, kodeDosen, namaDosen, jabatan, jenis, maxMahasiswa):
+    def __init__(self, kode, prodi, kodeMatkul, namaMatkul, menit, kelas, kodeDosen, namaDosen, tipeHari, jenis, maxMahasiswa):
         self._kode = kode
         self._prodi = prodi
         self._kodeMatkul = kodeMatkul
@@ -315,7 +315,7 @@ class Matkul:
         self._kelas = kelas
         self._kodeDosen = kodeDosen
         self._namaDosen = namaDosen
-        self._jabatan = jabatan
+        self._tipeHari = str(tipeHari)
         self._jenis = jenis
         self._maxMahasiswa = maxMahasiswa
 
@@ -337,8 +337,8 @@ class Matkul:
     def getKelas(self):
         return self._kelas
 
-    def getJabatan(self):
-        return self._jabatan
+    def getTipeHari(self):
+        return self._tipeHari
 
     def getKodeDosen(self):
         return self._kodeDosen
@@ -454,10 +454,13 @@ class Penjadwalan:
                 # print(jadwal[i].getMatkul().getMenit())
             ###
 
-            if (jadwal[i].getMatkul().getJabatan().lower() == "y" and jadwal[i].getHari().getNama().lower() == "selasa"):
+            if (jadwal[i].getMatkul().getTipeHari() == "1" and jadwal[i].getHari().getNama().lower() == "selasa"):
                 self._konflik += 1
                 # print("pejabat")
                 # print(jadwal[i].getMatkul().getJabatan().lower(), jadwal[i].getHari().getNama().lower())
+
+            if (jadwal[i].getMatkul().getTipeHari() == "2" and jadwal[i].getHari().getNama().lower() != "sabtu"):
+                self._konflik += 1
 
             waktuSatu = utils.formatWaktu(
                 jadwal[i].getWaktuMatkul().getWaktu())
@@ -604,7 +607,7 @@ class TampilData:
         for i in range(0, len(matkuls)):
             tableMatkuls.add_row(
                 [matkuls[i].getKode(), matkuls[i].getProdi(), matkuls[i].getNamaMatkul(), str(matkuls[i].getMenit()), matkuls[i].getKelas(
-                ), matkuls[i].getNamaDosen(), matkuls[i].getJabatan(), matkuls[i].getJenis(), str(matkuls[i].getMaxMahasiswa())]
+                ), matkuls[i].getNamaDosen(), matkuls[i].getTipeHari(), matkuls[i].getJenis(), str(matkuls[i].getMaxMahasiswa())]
             )
         print(tableMatkuls)
 
@@ -654,7 +657,7 @@ class TampilData:
                                                "Max Mahasiswa", "Jenis Ruang", "Hari", "Waktu", "Menit", "Ruang", "Jenis Ruang"])
 
         writer = pd.ExcelWriter(
-            "jadwal_baru.xlsx", engine='xlsxwriter')
+            "jadwal_baru3.xlsx", engine='xlsxwriter')
         df.to_excel(writer, sheet_name='Jadwal', index=False)
         worksheet = writer.sheets['Jadwal']
         worksheet.set_column('B:B', 22, None)
