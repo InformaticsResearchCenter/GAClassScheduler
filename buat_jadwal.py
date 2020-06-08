@@ -211,23 +211,34 @@ class Data:
 
         for i in range(0, len(self.RUANGANS)):
             self._ruangans.append(
-                Ruangan(self.RUANGANS[i][0], self.RUANGANS[i][1], self.RUANGANS[i][2]))
+                Ruangan(self.RUANGANS[i][0],
+                        self.RUANGANS[i][1],
+                        self.RUANGANS[i][2]))
 
         for i in range(0, len(self.WAKTU_MATKULS)):
             self._waktuMatkuls.append(
-                WaktuMatkul(self.WAKTU_MATKULS[i][0], self.WAKTU_MATKULS[i][1],
+                WaktuMatkul(self.WAKTU_MATKULS[i][0],
+                            self.WAKTU_MATKULS[i][1],
                             self.WAKTU_MATKULS[i][2]))
 
         for i in range(0, len(self.HARIS)):
             self._haris.append(
-                Hari(self.HARIS[i][0], self.HARIS[i][1]))
+                Hari(self.HARIS[i][0],
+                     self.HARIS[i][1]))
 
         for i in range(0, len(self.MATKULS)):
             self._matkuls.append(
-                Matkul(self.MATKULS[i][0], self.MATKULS[i][1], self.MATKULS[i][2],
-                       self.MATKULS[i][3], self.MATKULS[i][4], self.MATKULS[i][5],
-                       self.MATKULS[i][6], self.MATKULS[i][7], self.MATKULS[i][8],
-                       self.MATKULS[i][9], self.MATKULS[i][10])
+                Matkul(self.MATKULS[i][0],
+                       self.MATKULS[i][1],
+                       self.MATKULS[i][2],
+                       self.MATKULS[i][3],
+                       self.MATKULS[i][4],
+                       self.MATKULS[i][5],
+                       self.MATKULS[i][6],
+                       self.MATKULS[i][7],
+                       self.MATKULS[i][8],
+                       self.MATKULS[i][9],
+                       self.MATKULS[i][10])
             )
 
         for prodi in self.PRODIS:
@@ -236,9 +247,12 @@ class Data:
                 newMatkuls = []
                 for matkul in matkuls:
                     newMatkuls.append(Matkul(
-                        matkul[0], matkul[1], matkul[2], matkul[3],
-                        matkul[4], matkul[5], matkul[6], matkul[7],
-                        matkul[8], matkul[9], matkul[10]
+                        matkul[0], matkul[1],
+                        matkul[2], matkul[3],
+                        matkul[4], matkul[5],
+                        matkul[6], matkul[7],
+                        matkul[8], matkul[9],
+                        matkul[10]
                     ))
 
                 self.PRODIS[self.PRODIS.index(prodi)][2].extend(newMatkuls)
@@ -246,7 +260,9 @@ class Data:
         for i in range(0, len(self.PRODIS)):
             if self.PRODIS[i][2]:
                 self._prodis.append(
-                    Prodi(self.PRODIS[i][0], self.PRODIS[i][1], self.PRODIS[i][2]))
+                    Prodi(self.PRODIS[i][0],
+                          self.PRODIS[i][1],
+                          self.PRODIS[i][2]))
 
         self._banyakKelas = 0
         for i in range(0, len(self._prodis)):
@@ -419,10 +435,13 @@ class Jadwal:
         self._ruangan = ruangan
 
     def __str__(self):
-        return self._prodi.getNama()+" | "+self._matkul.getNamaMatkul()+"-"+self._matkul.getKelas()
-        +" | "+self._matkul.getNamaDosen() + " | "+self._ruangan.getKode() + \
-            " | "+self._hari.getNama()
-        +" | "+self._waktuMatkul.getWaktu()+" | "+str(self._waktuMatkul.getMenit()) + \
+        return self._prodi.getNama() +\
+            " | "+self._matkul.getNamaMatkul()+"-"+self._matkul.getKelas() +\
+            " | "+self._matkul.getNamaDosen() +\
+            " | "+self._ruangan.getKode() + \
+            " | "+self._hari.getNama() +\
+            " | "+self._waktuMatkul.getWaktu() +\
+            " | "+str(self._waktuMatkul.getMenit()) + \
             " | "+str(self._matkul.getMenit())
 
 
@@ -481,7 +500,8 @@ class Penjadwalan:
             if (int(jadwal[i].getWaktuMatkul().getMenit()) != int(jadwal[i].getMatkul().getMenit())):
                 self._konflik += 1
                 message += "3 "
-                # print(int(jadwal[i].getWaktuMatkul().getMenit()), int(jadwal[i].getMatkul().getMenit()))
+                print(int(jadwal[i].getWaktuMatkul().getMenit()), int(
+                    jadwal[i].getMatkul().getMenit()))
 
             text = ""
             for x in jadwal[i].getMatkul().getTipeHari():
@@ -506,7 +526,7 @@ class Penjadwalan:
 
             # print(days)
             listDay = [utils.getDay(day) for day in days]
-            # print(days, listDay, jadwal[i].getHari().getNama().lower())
+            print(days, listDay, jadwal[i].getHari().getNama().lower())
 
             # print(listDay[0])
             if (jadwal[i].getHari().getNama().lower() not in listDay and listDay[0] != "bebas"):
@@ -541,7 +561,7 @@ class Penjadwalan:
                             if(not(waktuSatu[0] <= waktuDua[0] and waktuSatu[1] <= waktuDua[0] and waktuSatu[0] <= waktuDua[1]) and jadwal[i].getKode() != jadwal[j].getKode()):
                                 self._konflik += 1
                                 message += "7 "
-            # print(message)
+            print(message)
         return 1 / ((1.0*self._konflik + 1))
 
     def __str__(self):
@@ -636,7 +656,8 @@ class TampilData:
         ruangans = data.getRuangans()
         for i in range(0, len(ruangans)):
             tableRuangans.add_row(
-                [str(ruangans[i].getKode()), str(ruangans[i].getKapasitas()),
+                [str(ruangans[i].getKode()),
+                 str(ruangans[i].getKapasitas()),
                  str(ruangans[i].getJenis())])
         print(tableRuangans)
 
@@ -645,7 +666,8 @@ class TampilData:
         waktuMatkuls = data.getWaktuMatkuls()
         for i in range(0, len(waktuMatkuls)):
             tableWaktuMatkuls.add_row(
-                [waktuMatkuls[i].getKode(), waktuMatkuls[i].getWaktu(),
+                [waktuMatkuls[i].getKode(),
+                 waktuMatkuls[i].getWaktu(),
                  str(waktuMatkuls[i].getMenit())])
         print(tableWaktuMatkuls)
 
@@ -669,10 +691,14 @@ class TampilData:
         matkuls = data.getMatkuls()
         for i in range(0, len(matkuls)):
             tableMatkuls.add_row(
-                [matkuls[i].getKode(), matkuls[i].getProdi(),
-                 matkuls[i].getNamaMatkul(), str(matkuls[i].getMenit()),
-                 matkuls[i].getKelas(), matkuls[i].getNamaDosen(),
-                 matkuls[i].getTipeHari(), matkuls[i].getJenis(),
+                [matkuls[i].getKode(),
+                 matkuls[i].getProdi(),
+                 matkuls[i].getNamaMatkul(),
+                 str(matkuls[i].getMenit()),
+                 matkuls[i].getKelas(),
+                 matkuls[i].getNamaDosen(),
+                 matkuls[i].getTipeHari(),
+                 matkuls[i].getJenis(),
                  str(matkuls[i].getMaxMahasiswa())]
             )
         print(tableMatkuls)
@@ -686,7 +712,10 @@ class TampilData:
             # for j in str(jadwals[i]).split(", "):
             #     hasilJadwal += j+"\n"
             tabelGenerasis.add_row(
-                [str(i+1), round(jadwals[i].getFitness(), 3), jadwals[i].getKonflik(), hasilJadwal])
+                [str(i+1),
+                 round(jadwals[i].getFitness(), 3),
+                 jadwals[i].getKonflik(),
+                 hasilJadwal])
         print(tabelGenerasis)
 
     def tampilGenerasi(self, populasi):
@@ -698,7 +727,9 @@ class TampilData:
             # for j in str(jadwals[i]).split(", "):
             #     hasilJadwal += j+"\n"
             tabelGenerasis.add_row([str(i+1),
-                                    round(jadwals[i].getFitness(), 3), jadwals[i].getKonflik(), hasilJadwal])
+                                    round(jadwals[i].getFitness(), 3),
+                                    jadwals[i].getKonflik(),
+                                    hasilJadwal])
         print(tabelGenerasis)
 
     def tampilJadwalKosong(self, dfJadwalKuliah):
@@ -730,7 +761,7 @@ class TampilData:
 
         for row in dfJadwalKuliah.itertuples(index=True, name='Pandas'):
 
-            deleteRows = dfJadwalKosong.loc[(dfJadwalKosong["Hari"] == row.Hari) & (dfJadwalKosong["Ruang"] == row.Ruang) & (
+            deleteRows = dfJadwalKosong.loc[(dfJadwalKosong["Hari"] == row.Hari) and (dfJadwalKosong["Ruang"] == row.Ruang) and (
                 [waktuSama(waktu, row) for waktu in dfJadwalKosong["Waktu"]])
             ].index
             dfJadwalKosong.drop(deleteRows, inplace=True)
